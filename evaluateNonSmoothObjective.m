@@ -1,28 +1,29 @@
 function [objective] = evaluateNonSmoothObjective(x, potentials)
     % Evaluate objective given potentials.
     objective = 0;
-    linear_val = 0;
     
     for i=1: height(potentials)
-        linear_evaluation(potentials.Var_Index{i}, ...
-            potentials.Var_Coefficient{i}, potentials.Constant(i));
-        if potentials.Hinge(i) && potentials.Square(i)
+        potential_indices = potentials.Var_Index{i}{1};
+        potential_coefficients = potentials.Var_Coefficient{i}{1};
+        constant = potentials.Constant(i);
+        weight = potentials.Weight(i);
+        is_hinge = potentials.Hinge(i);
+        is_square = potentials.Square(i);
+        
+        linear_val = dot(x(potential_indices), potential_coefficients) - constant;
+        if is_hinge && is_square
             % Evaluate Square Hinge-loss
-            objective = objective + potentials.Weight(i) * max(linear_val, 0.0)^2;
-        elseif potentials.Hinge(i) && ~potentials.Square(i)
+            objective = objective + weight * max(linear_val, 0.0)^2;
+        elseif is_hinge && ~is_square
             % Evaluate Hinge-loss
-            objective = objective + potentials.Weight(i) * max(linear_val, 0.0);
-        elseif ~potentials.Hinge(i) && potentials.Square(i)
+            objective = objective + weight * max(linear_val, 0.0);
+        elseif ~is_hinge && is_square
             % Evaluate Quadratic-loss
             objective = objective + potentials.Weight(i) * linear_val^2;
-        elseif ~potentials.Hinge(i) && ~potentials.Square(i)
+        elseif ~potentials.Hinge(i) && ~is_square
             % Evaluate Linear-loss
-            objective = objective + potentials.Weight(i) * linear_val;
+            objective = objective + weight * linear_val;
         end
-    end
-    
-    function linear_evaluation(indices, coefficients, constant)
-        linear_val = dot(x(indices{1}), coefficients{1}) - constant;
     end
 end
 
