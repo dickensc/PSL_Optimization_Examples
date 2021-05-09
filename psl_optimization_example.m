@@ -1,7 +1,7 @@
 %% Load example
 addpath("./loading_functions")
 
-example_name = "epinions";
+example_name = "entity-resolution";
 
 [hinge_potentials, square_hinge_potentials, ...
     linear_potentials, quadratic_potentials, ...
@@ -130,10 +130,9 @@ end
 A_C = sparse(height(constraints), smooth_num_variables);
 c_C = sparse(height(constraints), 1);
 for i = 1: height(constraints)
-    var_indices = hinge_potentials.Var_Index{i}{1};
-    var_coefficients = hinge_potentials.Var_Coefficient{i}{1};
-    constant = hinge_potentials.Constant(i);
-    weight = hinge_potentials.Weight(i);
+    var_indices = constraints.Var_Index{i}{1};
+    var_coefficients = constraints.Var_Coefficient{i}{1};
+    constant = constraints.Constant(i);
     
     A_C(i, var_indices) = var_coefficients;
     c_C(i) = constant;
