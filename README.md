@@ -62,6 +62,6 @@ s.t. Ax \leq b
 `smooth_psl_optimization_example.m` is an example script that will load example data using the helper in loading_functions, define the QP using `get_qp_problem.m` and then run Matlab's provdied QP solver `quadprog`.
 To change the example that is used change the `example_name` variable at the top of the script. Example: `example_name = "lastfm";`
 
-## Non_Smooth Optimization Example
+## Non Smooth Optimization Example
 `non_smooth_psl_optimization_example.m` is an example script that will load example data using the helper in loading_functions, and then run a simple implementation of SGD to minimize the non-smooth objective.
 To change the example that is used change the `example_name` variable at the top of the script. Example: `example_name = "lastfm";`
