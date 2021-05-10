@@ -38,7 +38,7 @@ Var_Index	Var_Coefficient	Constant
 `Constant` is the constant term defining the constraint.
 
 ## Loading Functions
-Loading functions is a directory that contains files defining Matlab functions for loading the .tsv formatted potential and contstraint files.
+loading_functions is a directory that contains files defining Matlab functions for loading the .tsv formatted potential and contstraint files.
 `load_meta_data.m` will load a meta_data.tsv file and return a table with column `Num_Variables`.
 `load_potential_file.m` will load a potential file and return a table with columns `Weight`, `Var_Index`, `Var_Coefficient`, and `Constant`.
 `load_coonstraint_file.m` will load a constraint file and return a table with columns `Var_Index`, `Var_Coefficient`, and `Constant`.
@@ -57,3 +57,11 @@ smooth_helpers is a directory containg files that help formulate the smooth infe
 min_{x} x^T H x + f^T x
 s.t. Ax \leq b
 ```
+
+## Smooth Optimization Example
+`smooth_psl_optimization_example.m` is an example script that will load example data using the helper in loading_functions, define the QP using `get_qp_problem.m` and then run Matlab's provdied QP solver `quadprog`.
+To change the example that is used change the `example_name` variable at the top of the script. Example: `example_name = "lastfm";`
+
+## Non_Smooth Optimization Example
+`non_smooth_psl_optimization_example.m` is an example script that will load example data using the helper in loading_functions, and then run a simple implementation of SGD to minimize the non-smooth objective.
+To change the example that is used change the `example_name` variable at the top of the script. Example: `example_name = "lastfm";`
