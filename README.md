@@ -29,7 +29,7 @@ Weight	Var_Index	Var_Coefficient	Constant
 ### Constraint file
 An example can contain up to one `constraints.tsv` file
 
-This has the format:
+This file has the format:
 ```
 Var_Index	Var_Coefficient	Constant
 ```
