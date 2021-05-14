@@ -1,4 +1,4 @@
-function [objective] = evaluateNonSmoothObjective(x, potentials)
+function [objective] = evaluateNonSmoothObjective(potentials, x)
     % Evaluate objective given potentials.
     objective = 0;
     
@@ -19,8 +19,8 @@ function [objective] = evaluateNonSmoothObjective(x, potentials)
             objective = objective + weight * max(linear_val, 0.0);
         elseif ~is_hinge && is_square
             % Evaluate Quadratic-loss
-            objective = objective + potentials.Weight(i) * linear_val^2;
-        elseif ~potentials.Hinge(i) && ~is_square
+            objective = objective + weight * linear_val^2;
+        elseif ~is_hinge && ~is_square
             % Evaluate Linear-loss
             objective = objective + weight * linear_val;
         end

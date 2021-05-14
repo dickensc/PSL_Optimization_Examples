@@ -9,7 +9,7 @@ example_name = "epinions";
     constraints, meta_data] = load_example_data(example_name);
 
 
-%% Example Non-Smooth Problem Optimization.
+%% Aggregate Potentials into single table.
 
 % Concatenate Potentials into one table.
 hinge_potentials.Hinge = ones(height(hinge_potentials), 1, 'logical');
@@ -26,7 +26,10 @@ quadratic_potentials.Square = ones(height(quadratic_potentials), 1, 'logical');
 
 potentials = [hinge_potentials; square_hinge_potentials; linear_potentials; quadratic_potentials];
 
-% SGD.
+%% Initialize decision variables randomly in (0, 1).
+x0 = rand(meta_data.Num_Variables, 1);
+
+%% Example SGD Implementation.
 num_epochs = 100;
 step_size = 0.01;
 
@@ -40,29 +43,36 @@ if height(constraints) > 0
     potentials = [potentials; relaxed_constraints];
 end
 
-% Initialize decision variables randomly in (0, 1).
-x_non_smooth = rand(meta_data.Num_Variables, 1);
+% Run SGD. x is all of the iterates and objectives are at every epoch.
+[x, objectives] = pslSGD(potentials, num_epochs, step_size, x0);
 
-% Evaluate initial objective.
-objectives = zeros(num_epochs + 1, 1);
-objectives(1) = evaluateNonSmoothObjective(x_non_smooth, potentials);
+%% Example use of MATLAB Non-linear Optimization Toolbox
 
-% Loop for num_epochs.
-for i=1: num_epochs
-    potential_permutation = randperm(height(potentials));
-    for j=1: height(potentials)
-        permutation_index = potential_permutation(j);
-        potential_indices = potentials.Var_Index{permutation_index}{1};
-        potential_coefficients = potentials.Var_Coefficient{permutation_index}{1};
-        constant = potentials.Constant(permutation_index);
-        weight = potentials.Weight(permutation_index);
-        is_hinge = potentials.Hinge(permutation_index);
-        is_square = potentials.Square(permutation_index);
-        % SGD step.
-        x_non_smooth(potential_indices) = (x_non_smooth(potential_indices) - step_size * computeNonSmoothPotentialGradient(x_non_smooth, potential_indices, potential_coefficients, constant, weight, is_hinge, is_square));
-        % Clip for box constraints.
-        x_non_smooth(potential_indices) = min(max(min(x_non_smooth(potential_indices), 1), 0), 1);
-    end
-    % Evaluate objective after epoch.
-    objectives(i) = evaluateNonSmoothObjective(x_non_smooth, potentials);
+% Reset potentials table
+potentials = [hinge_potentials; square_hinge_potentials; linear_potentials; quadratic_potentials];
+
+% Define objective and gradient function.
+fun = @(x0)computeObjectiveAndGradient(potentials, x0);
+
+% Set optimoptions.
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display','iter');
+
+% Constraints.
+A = sparse(height(constraints), meta_data.Num_Variables);
+b = zeros(height(constraints), 1);
+for i = 1: height(constraints)
+    var_indices = constraints.Var_Index{i}{1};
+    var_coefficients = constraints.Var_Coefficient{i}{1};
+    constant = constraints.Constant(i);
+
+    A(i, var_indices) = var_coefficients;
+    b(i) = constant;
 end
+
+% Remaining parameters.
+Aeq = [];
+beq = [];
+lb = zeros(length(x0),1);
+ub = ones(length(x0),1);
+
+x = fmincon(fun, x0, A, b, Aeq, beq, lb, ub, [], options);
