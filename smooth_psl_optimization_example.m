@@ -2,7 +2,7 @@
 addpath("./loading_functions")
 addpath("./smooth_helpers")
 
-example_name = "cora";
+example_name = "epinions";
 
 [hinge_potentials, square_hinge_potentials, ...
     linear_potentials, quadratic_potentials, ...
@@ -15,4 +15,4 @@ options = optimoptions('quadprog','Display','iter');
 [H, f, A, b, Aeq, beq, lb, ub] = get_qp_problem(hinge_potentials, ...
     square_hinge_potentials, linear_potentials, quadratic_potentials, ...
     constraints, meta_data);
-x_smooth = quadprog(H,f,A,b,Aeq,beq,lb,ub,x0,options);
+x = quadprog(H,f,A,b,Aeq,beq,lb,ub,x0,options);
