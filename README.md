@@ -30,7 +30,7 @@ Weight	Var_Index	Var_Coefficient	Constant
 
 `Constant` is the constant term defining the potential.
 
-### Constraint file
+### Constraint files
 An example can contain up to one `constraints.tsv` file
 
 This file has the format:
