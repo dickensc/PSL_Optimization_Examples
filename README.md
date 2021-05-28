@@ -7,7 +7,8 @@ Additionally there are examples scripts for optimizing over non-smooth and smoot
 ## Potential and Constraint data file formats.
 Currently the examples provided are lastfm, epinions, entity-resolution, and cora.
 Every PSL example has its own directory identifiable by the example name. 
-In the direrctory of an example there are tab separated data files described below.
+These directories are expected to be located at the top level directory of this repo.
+In the direrctory of each example there are tab separated data files described below.
 
 ### meta_data.tsv
 Every example contains a meta_data.tsv file, example: lastfm/meta_data.tsv
