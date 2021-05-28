@@ -12,6 +12,11 @@ Additionally there are examples scripts for optimizing over non-smooth and smoot
 - [Smooth Optimization Example](#smooth-optimization-example)
 - [Non Smooth Optimization Example](#non-smooth-optimization-example)
 
+# Requirements
+The PSL examples require the following to run:
+- [MATLAB 2021a](https://www.mathworks.com/products/matlab.html)
+- [Optimization_Toolbox](https://www.mathworks.com/products/optimization.html)
+
 # Potential and Constraint data file formats.
 Currently the examples provided are lastfm, epinions, entity-resolution, and cora.
 Every PSL example has its own directory identifiable by the example name. 
