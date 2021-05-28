@@ -10,7 +10,7 @@ Additionally there are examples scripts for optimizing over non-smooth and smoot
 - [Non Smooth Helpers](#non-smooth-helpers)
 - [Smooth Helpers](#smooth-helpers)
 - [Smooth Optimization Example](#smooth-optimization-example)
-- [Non Smooth Optimization Example](#non-smooth-pptimization-example)
+- [Non Smooth Optimization Example](#non-smooth-optimization-example)
 
 # Potential and Constraint data file formats.
 Currently the examples provided are lastfm, epinions, entity-resolution, and cora.
