@@ -5,6 +5,7 @@ Matlab scripts are provided for loading the exported potential functions.
 Additionally there are examples scripts for optimizing over non-smooth and smooth problem formulations.
 
 # Table of Contents
+- [Requirements](#requirements)
 - [Potential and Constraint data file formats](#potential-and-Constraint-data-file-formats)
 - [Loading Functions](#loading-functions)
 - [Non Smooth Helpers](#non-smooth-helpers)
@@ -15,7 +16,7 @@ Additionally there are examples scripts for optimizing over non-smooth and smoot
 # Requirements
 The PSL examples require the following to run:
 - [MATLAB 2021a](https://www.mathworks.com/products/matlab.html)
-- [Optimization_Toolbox](https://www.mathworks.com/products/optimization.html)
+- [Optimization Toolbox](https://www.mathworks.com/products/optimization.html)
 
 # Potential and Constraint data file formats.
 Currently the examples provided are lastfm, epinions, entity-resolution, and cora.
