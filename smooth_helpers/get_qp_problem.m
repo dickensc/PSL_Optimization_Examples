@@ -89,7 +89,7 @@ function [H, f, A, b, Aeq, beq, lb, ub] = get_qp_problem(hinge_potentials, ...
     end
 
     % Define QP.
-    H = [Q_Q;Q_SH];
+    H = [Q_Q;Q_SH]; 
     f = b_Q + b_L + b_H;
     A = [A_SH; A_H; A_C; A_box; A_slack];
     b = [c_SH; c_H; c_C; c_box; c_slack];

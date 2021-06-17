@@ -1,5 +1,5 @@
 function [gradient] = computeNonSmoothPotentialGradient(x, potential_indices, potential_coefficients, constant, weight, is_hinge, is_square)
-    % Compute the gradient of the provided potential, i, at the specifieid location: x.
+    % Compute the gradient of the provided potential, i, at the specified location: x.
     gradient = zeros(length(potential_indices), 1);
     
     linear_val = dot(x(potential_indices), potential_coefficients) - constant;
