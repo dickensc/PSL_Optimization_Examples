@@ -4,16 +4,31 @@ Potential functions and constraints defining the inference problem were exported
 Matlab scripts are provided for loading the exported potential functions.
 Additionally there are examples scripts for optimizing over non-smooth and smooth problem formulations.
 
-## Potential and Constraint data file formats.
+# Table of Contents
+- [Requirements](#requirements)
+- [Potential and Constraint data file formats](#potential-and-Constraint-data-file-formats)
+- [Loading Functions](#loading-functions)
+- [Non Smooth Helpers](#non-smooth-helpers)
+- [Smooth Helpers](#smooth-helpers)
+- [Smooth Optimization Example](#smooth-optimization-example)
+- [Non Smooth Optimization Example](#non-smooth-optimization-example)
+
+# Requirements
+The PSL examples require the following to run:
+- [MATLAB 2021a](https://www.mathworks.com/products/matlab.html)
+- [Optimization Toolbox](https://www.mathworks.com/products/optimization.html)
+
+# Potential and Constraint data file formats.
 Currently the examples provided are lastfm, epinions, entity-resolution, and cora.
 Every PSL example has its own directory identifiable by the example name. 
-In the direrctory of an example there are tab separated data files described below.
+These directories are expected to be located at the top level directory of this repo.
+In the direrctory of each example there are tab separated data files described below.
 
-### meta_data.tsv
+## meta_data.tsv
 Every example contains a meta_data.tsv file, example: lastfm/meta_data.tsv
 This file currently only contains the number of decision variables in the non-smooth formulation of the inference problem.
 
-### Potential files
+## Potential files
 An example can contain up to one of each of the following files: 
 hinge_potentials.tsv, square_hinge_potentials.tsv, linear_potentials.tsv, quadratic_potentials.tsv
 
@@ -30,7 +45,7 @@ Weight	Var_Index	Var_Coefficient	Constant
 
 `Constant` is the constant term defining the potential.
 
-### Constraint file
+## Constraint files
 An example can contain up to one `constraints.tsv` file
 
 This file has the format:
@@ -44,7 +59,7 @@ Var_Index	Var_Coefficient	Constant
 
 `Constant` is the constant term defining the constraint.
 
-## Loading Functions
+# Loading Functions
 loading_functions is a directory that contains files defining Matlab functions for loading the .tsv formatted potential and contstraint files.
 
 `load_meta_data.m` will load a meta_data.tsv file and return a table with column `Num_Variables`.
@@ -55,7 +70,7 @@ loading_functions is a directory that contains files defining Matlab functions f
 
 `load_example_data.m` will load the meta_data.tsv and all existing potential and constraint files in a specified example directory and return appropriate tables for each.
 
-## Non Smooth Helpers
+# Non Smooth Helpers
 non_smooth_helpers is a directory containing files defining Matlab functions for evaluating the non smooth problem objective and the gradient of a potential.
 
 `evaluateNonSmoothObjective.m` will evaluate the non_smooth objective at a specified location: `x`, given a table of potentials with columns: `Weight`, `Var_Index`, `Var_Coefficient`, `Constant`, `hinge`, `square`. `hinge` and `square`.
@@ -66,7 +81,7 @@ non_smooth_helpers is a directory containing files defining Matlab functions for
 
 `computeObjectiveAndGradient` will compute the objective valuue and gradient of a problem defined by a table of potentials as in `evaluateNonSmoothObjective.m` at a  specified location: `x`.
 
-## Smooth Helpers
+# Smooth Helpers
 smooth_helpers is a directory containg files that help formulate the smooth inference problem.
 
 `get_qp_problem.m` will return the parameters defining a linearly constrained quadratic program from the provided potential and constraint tables. The returned parameters define the quadratic program
@@ -76,11 +91,11 @@ min_{x} x^T H x + f^T x
 s.t. Ax \leq b
 ```
 
-## Smooth Optimization Example
+# Smooth Optimization Example
 `smooth_psl_optimization_example.m` is an example script that will load example data using the helper in loading_functions, define a LCQP using `get_qp_problem.m` and then run Matlab's provdied QP solver `quadprog`.
 To change the example that is used change the `example_name` variable at the top of the script. Example: `example_name = "lastfm";`
 
-## Non Smooth Optimization Example
+# Non Smooth Optimization Example
 `non_smooth_psl_optimization_example.m` is an example script that will load example data using the helper in loading_functions, and then run both a simple implementation of SGD to minimize the non-smooth objective and use the MATLAB Non-linear Optimization Toolbox to define and solve a linearly constrained convex optimization problem.
 
 To change the example that is used change the `example_name` variable at the top of the script. Example: `example_name = "lastfm";`
