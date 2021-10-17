@@ -30,7 +30,7 @@ potentials = [hinge_potentials; square_hinge_potentials; linear_potentials; quad
 x0 = rand(meta_data.Num_Variables, 1);
 
 %% Example SGD Implementation.
-num_epochs = 25;
+num_epochs = 250;
 step_size = 0.01;
 
 % Relax Constraints and add to potentials.
@@ -71,8 +71,8 @@ set(gca, 'YScale', 'log')
 saveas(gcf, sprintf('figures/%s_sgd_convergence.png', example_name));
 
 %% Example GD Implementation.
-num_epochs = 25;
-step_size = 0.01;
+num_epochs = 50;
+step_size = 0.1;
 
 % Relax Constraints and add to potentials.
 if height(constraints) > 0

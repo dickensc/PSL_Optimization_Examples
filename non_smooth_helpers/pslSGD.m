@@ -13,7 +13,7 @@ function [x, objectives, gradients] = pslSGD(potentials, num_epochs, step_size_0
     
     % Loop for num_epochs.
     for i=1: num_epochs
-        step_size =  step_size_0 / i;
+        step_size =  step_size_0 / (i);
         % compute objective and gradient.
         [objectives(i), gradients(i, :)] = computeObjectiveAndGradient(potentials, x(i, :));
         % copy previous epoch location.
@@ -32,7 +32,7 @@ function [x, objectives, gradients] = pslSGD(potentials, num_epochs, step_size_0
             % SGD step.
             x(i + 1, potential_indices) = x(i + 1, potential_indices).' - step_size * gradient;
             % Clip for box constraints.
-            x(i + 1, potential_indices) = min(max(min(x(i + 1, potential_indices), 1), 0), 1);
+            x(i + 1, potential_indices) = max(min(x(i + 1, potential_indices), 1), 0);
         end
     end
 end

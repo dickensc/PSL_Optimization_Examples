@@ -1,4 +1,4 @@
-function [x, objectives, gradients] = pslGD(potentials, num_epochs, step_size, x0)
+function [x, objectives, gradients] = pslGD(potentials, num_epochs, step_size_0, x0)
 % pslGD: Performs gradient descent on the inference problem defined by the 
 %  provided potentials. Note that this implementation assumes that the 
 %  [0,1] box constraints are the only constraints of the problem.
@@ -13,7 +13,7 @@ function [x, objectives, gradients] = pslGD(potentials, num_epochs, step_size, x
 
     % Loop for num_epochs.
     for i=1: num_epochs
-        step_size = step_size / i;
+        step_size = step_size_0 / i;
         % compute objective and gradient.
         [objectives(i), gradients(i, :)] = parallelComputeObjectiveAndGradient(potentials, x(i, :));
         % GD step.
